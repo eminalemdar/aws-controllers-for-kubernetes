@@ -7,20 +7,20 @@ for the Service Controller and installs it
 on the Kubernetes cluster.
 Permissions function creates required IRSA config
 and configures required IAM Permissions for the 
-S3 Service Controller and connects those to the
+Service Controller and connects those to the
 service account.
 '
+declare SERVICE="$1"
+declare AWS_REGION="eu-west-1"
+declare ACK_SYSTEM_NAMESPACE="ack-system"
 
 install(){
-
-  SERVICE=$1
   
   echo "===================================================="
   echo "Creating required Environment Variables."
   echo "===================================================="
   
   declare -i HELM_EXPERIMENTAL_OCI=1
-  declare SERVICE="$SERVICE"
   declare RELEASE_VERSION=$(curl -sL https://api.github.com/repos/aws-controllers-k8s/${SERVICE}-controller/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
   declare CHART_EXPORT_PATH="/tmp/chart"
   declare CHART_REF="${SERVICE}-chart"
@@ -36,9 +36,6 @@ install(){
   helm pull oci://${CHART_REPO} --version "$RELEASE_VERSION" -d "$CHART_EXPORT_PATH"
   tar xvf ${CHART_EXPORT_PATH}/${CHART_PACKAGE} -C "$CHART_EXPORT_PATH"
   
-  declare ACK_SYSTEM_NAMESPACE="ack-system"
-  declare AWS_REGION="eu-west-1"
-  
   helm install --create-namespace --namespace "$ACK_SYSTEM_NAMESPACE" ack-${SERVICE}-controller \
       --set aws.region="$AWS_REGION" \
       ${CHART_EXPORT_PATH}/${SERVICE}-chart
@@ -48,8 +45,6 @@ install(){
 #####################################################################################################################
 
 permissions(){
-
-  SERVICE=$1
 
   echo "===================================================="
   echo "Creating IRSA for EKS Cluster"
@@ -61,17 +56,14 @@ permissions(){
   ###########################################################
 
   declare EKS_CLUSTER_NAME="eks-cluster-for-ack"
-  declare AWS_REGION="eu-west-1"
   eksctl utils associate-iam-oidc-provider --cluster ${EKS_CLUSTER_NAME} --region ${AWS_REGION} --approve
 
   echo "===================================================="
   echo "Creating Required IAM Role and Policy"
   echo "===================================================="
 
-  SERVICE="$SERVICE"
   AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
   OIDC_PROVIDER=$(aws eks describe-cluster --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION} --query "cluster.identity.oidc.issuer" --output text | sed -e "s/^https:\/\///")
-  ACK_K8S_NAMESPACE=ack-system
 
   ACK_K8S_SERVICE_ACCOUNT_NAME=ack-${SERVICE}-controller
 
@@ -87,7 +79,7 @@ permissions(){
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
           "StringEquals": {
-            "${OIDC_PROVIDER}:sub": "system:serviceaccount:${ACK_K8S_NAMESPACE}:${ACK_K8S_SERVICE_ACCOUNT_NAME}"
+            "${OIDC_PROVIDER}:sub": "system:serviceaccount:${ACK_SYSTEM_NAMESPACE}:${ACK_K8S_SERVICE_ACCOUNT_NAME}"
           }
         }
       }
@@ -134,12 +126,12 @@ EOF
   echo "===================================================="
 
   declare IRSA_ROLE_ARN=eks.amazonaws.com/role-arn=${ACK_CONTROLLER_IAM_ROLE_ARN}
-  kubectl annotate serviceaccount -n ${ACK_K8S_NAMESPACE} ${ACK_K8S_SERVICE_ACCOUNT_NAME} ${IRSA_ROLE_ARN}
+  kubectl annotate serviceaccount -n ${ACK_SYSTEM_NAMESPACE} ${ACK_K8S_SERVICE_ACCOUNT_NAME} ${IRSA_ROLE_ARN}
 
   # Note the deployment name for ACK service controller from following command
-  kubectl get deployments -n ${ACK_K8S_NAMESPACE}
-  kubectl -n ${ACK_K8S_NAMESPACE} rollout restart deployment <ACK deployment name> #Change me
+  ACK_DEPLOYMENT_NAME=$(kubectl get deployments -n ${ACK_SYSTEM_NAMESPACE} --no-headers | grep "$SERVICE" | awk '{print $1}')
+  kubectl -n ${ACK_SYSTEM_NAMESPACE} rollout restart deployment "$ACK_DEPLOYMENT_NAME"
 }
 
-install
-permissions
+install "$SERVICE"
+permissions "$SERVICE"
