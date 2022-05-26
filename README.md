@@ -50,3 +50,11 @@ terraform apply --auto-approve
 >
 > - These resources are not Free Tier eligible.
 > - You need to configure AWS Authentication for Terraform with either [Environment Variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set) or AWS CLI [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html#cli-configure-profiles-create).
+
+When you want to install a Service Controller and configure IAM Permissions you can run `./ack_controller_install.sh <service_name>` and change the *service_name* accordingly.
+
+The [script](./ack_controller_install.sh) has two functions called install and permissions.
+
+- Install function downloads the required Helm Chart from the official AWS Registry installs it to the Kubernetes cluster.
+
+- Permissions function creates OIDC identity provider for the Kubernetes cluster and creates IAM Roles for for Service Accounts of the Service Controllers.
