@@ -1,0 +1,8 @@
+apiVersion: ecr.services.k8s.aws/v1alpha1
+kind: Repository
+metadata:
+  name: $REPOSITORY_NAME #Change the Repository Name
+spec:
+  name: $REPOSITORY_NAME #Change the Repository Name
+  imageScanningConfiguration:
+    scanOnPush: true
