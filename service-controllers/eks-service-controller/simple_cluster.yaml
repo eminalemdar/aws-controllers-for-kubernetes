@@ -12,4 +12,3 @@ spec:
       - "$PUBLIC_SUBNET_1" #Change the first Subnet ID
       - "$PUBLIC_SUBNET_2" #Change the second Subnet ID
   version: $KUBERNETES_VERSION #Change the Kubernetes Version
-  
