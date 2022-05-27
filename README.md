@@ -1,6 +1,6 @@
 # AWS Controllers for Kubernetes (ACK) examples
 
-This repository consist examples for AWS Controllers for Kubernetes [(ACK)](https://aws-controllers-k8s.github.io/community/). ACK allows you to create AWS Resources on your behalf from Kubernetes Clusters with simple Kubernetes YAML files.
+This repository consists of examples for the AWS Controllers for Kubernetes [(ACK)](https://aws-controllers-k8s.github.io/community/). ACK allows you to create AWS Resources on your behalf from Kubernetes Clusters with simple Kubernetes YAML files.
 
 ## Prerequisites
 
