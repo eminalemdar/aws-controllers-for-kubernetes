@@ -23,5 +23,5 @@ kubectl apply -f <file_name> #Change the file name accordingly
 ## Delete the ECR Repository
 
 ```bash
-kubectl delete repository <bucket_name> #Change the repository name accordingly
+kubectl delete repository <repository_name> #Change the repository name accordingly
 ```

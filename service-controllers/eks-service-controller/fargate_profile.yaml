@@ -1,0 +1,14 @@
+apiVersion: eks.services.k8s.aws/v1alpha1
+kind: FargateProfile
+metadata:
+  name: $PROFILE_NAME #Change the Profile Name
+spec:
+  name: $PROFILE_NAME #Change the Profile Name
+  clusterName: $CLUSTER_NAME #Change the Cluster Name
+  podExecutionRoleARN: $FARGATE_POD_ROLE #Change the Fargate Role ARN
+  subnets:
+    - "$PRIVATE_SUBNET_1" #Change the Subnet ID
+    - "$PRIVATE_SUBNET_2" #Change the Subnet ID
+  selectors:
+    labels: {}
+    namespace: $NAMESPACE #Change the Namespace

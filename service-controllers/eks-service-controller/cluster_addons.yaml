@@ -1,0 +1,9 @@
+apiVersion: eks.services.k8s.aws/v1alpha1
+kind: Addon
+metadata:
+  name: $ADDON_NAME #Change the Addon Name
+spec:
+  name: $ADDON_NAME #Change the Addon Name
+  addonVersion: $ADDON_VERSION #Change the Addon Version
+  #https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeAddonVersions.html
+  clusterName: $CLUSTER_NAME #Change the Cluster Name
