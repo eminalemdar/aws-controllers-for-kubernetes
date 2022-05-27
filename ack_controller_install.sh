@@ -20,6 +20,7 @@ install(){
   echo "Creating required Environment Variables."
   echo "===================================================="
   
+  # Setting the Environment variables for Service Controller Helm Chart
   declare -i HELM_EXPERIMENTAL_OCI=1
   declare RELEASE_VERSION=$(curl -sL https://api.github.com/repos/aws-controllers-k8s/${SERVICE}-controller/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
   declare CHART_EXPORT_PATH="/tmp/chart"
@@ -33,6 +34,7 @@ install(){
   echo "Installing the Service Controller Helm Chart."
   echo "===================================================="
   
+  # Pulling the Helm Chart from Official AWS Registry and installing it.
   helm pull oci://${CHART_REPO} --version "$RELEASE_VERSION" -d "$CHART_EXPORT_PATH"
   tar xvf ${CHART_EXPORT_PATH}/${CHART_PACKAGE} -C "$CHART_EXPORT_PATH"
   
@@ -54,7 +56,7 @@ permissions(){
   # You can skip this step if you have already configured   #
   # IRSA for your Kubernetes Cluster.                       #
   ###########################################################
-
+  
   declare EKS_CLUSTER_NAME="eks-cluster-for-ack"
   eksctl utils associate-iam-oidc-provider --cluster ${EKS_CLUSTER_NAME} --region ${AWS_REGION} --approve
 
@@ -62,11 +64,13 @@ permissions(){
   echo "Creating Required IAM Role and Policy"
   echo "===================================================="
 
+  # Setting the required parameters for OIDC Provider.
   AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
   OIDC_PROVIDER=$(aws eks describe-cluster --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION} --query "cluster.identity.oidc.issuer" --output text | sed -e "s/^https:\/\///")
 
   ACK_K8S_SERVICE_ACCOUNT_NAME=ack-${SERVICE}-controller
 
+  # Creating IAM Trust Policy. 
   read -r -d '' TRUST_RELATIONSHIP <<EOF
   {
     "Version": "2012-10-17",
@@ -88,6 +92,7 @@ permissions(){
 EOF
   echo "${TRUST_RELATIONSHIP}" > trust.json
 
+  # Setting the required Environment Variables for IRSA (IAM Roles for Service Accounts).
   ACK_CONTROLLER_IAM_ROLE="ack-${SERVICE}-controller"
   ACK_CONTROLLER_IAM_ROLE_DESCRIPTION='IRSA role for ACK $SERVICE controller deployment on EKS cluster using Helm charts'
   aws iam create-role --role-name "${ACK_CONTROLLER_IAM_ROLE}" --assume-role-policy-document file://trust.json --description "${ACK_CONTROLLER_IAM_ROLE_DESCRIPTION}"
@@ -97,6 +102,7 @@ EOF
   echo "Attaching the policy to the IAM Role"
   echo "===================================================="
 
+  # Environment variables for required ARNs.
   BASE_URL=https://raw.githubusercontent.com/aws-controllers-k8s/${SERVICE}-controller/main
   POLICY_ARN_URL=${BASE_URL}/config/iam/recommended-policy-arn
   POLICY_ARN_STRINGS="$(wget -qO- ${POLICY_ARN_URL})"
@@ -104,6 +110,7 @@ EOF
   INLINE_POLICY_URL=${BASE_URL}/config/iam/recommended-inline-policy
   INLINE_POLICY="$(wget -qO- ${INLINE_POLICY_URL})"
 
+  # Attaching the policy to the IAM Role.
   while IFS= read -r POLICY_ARN; do
       echo -n "Attaching ${POLICY_ARN} ... "
       aws iam attach-role-policy \
@@ -125,6 +132,7 @@ EOF
   echo "Associating the Role with the Service Account"
   echo "===================================================="
 
+  # Updating the Kubernetes Service Account with the new IAM Role
   declare IRSA_ROLE_ARN=eks.amazonaws.com/role-arn=${ACK_CONTROLLER_IAM_ROLE_ARN}
   kubectl annotate serviceaccount -n ${ACK_SYSTEM_NAMESPACE} ${ACK_K8S_SERVICE_ACCOUNT_NAME} ${IRSA_ROLE_ARN}
 
