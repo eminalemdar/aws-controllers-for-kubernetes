@@ -1,0 +1,15 @@
+#This rule moves objects to Glacier after 60 days
+apiVersion: s3.services.k8s.aws/v1alpha1
+kind: Bucket
+metadata:
+  name: $BUCKET_NAME #Change the Bucket Name
+spec:
+  name: $BUCKET_NAME #Change the Bucket Name
+  lifecycle:
+    rules:
+    - id: "Move to Glacier after sixty days"
+      prefix: "/" #Change the Prefix
+      status: "Enabled"
+      transitions:
+      - days: 60
+        storageClass: "GLACIER"

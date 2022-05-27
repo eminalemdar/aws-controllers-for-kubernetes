@@ -1,0 +1,12 @@
+apiVersion: s3.services.k8s.aws/v1alpha1
+kind: Bucket
+metadata:
+  name: $BUCKET_NAME #Change the Bucket Name
+spec:
+  name: $BUCKET_NAME #Change the Bucket Name
+  tagging:
+    tagSet:
+    - key: "FirstTagKey" #Change
+      value: "FirstTagValue" #Change
+    - key: "SecondTagKey" #Change
+      value: "SecondTagValue" #Change
