@@ -18,7 +18,7 @@ spec:
   engineVersion: "14.1" #Change the DB Engine Version accordingly
   deletionProtection: true
   storageEncrypted: false
-  masterUsername: root
+  masterUsername: root #Change the DB Master Username
   masterUserPassword:
     namespace: $MASTER_USER_PASS_SECRET_NAMESPACE #Reference to the Kubernetes Secret
     name: $MASTER_USER_PASS_SECRET_NAME #Reference to the Kubernetes Secret
