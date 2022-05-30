@@ -1,0 +1,13 @@
+apiVersion: rds.services.k8s.aws/v1alpha1
+kind: DBSubnetGroup
+metadata:
+  name: $DB_SUBNET_GROUP_NAME #Change the DB Subnet Group Name
+spec:
+  name: $DB_SUBNET_GROUP_NAME #Change the DB Subnet Group Name
+  description: $DB_SUBNET_GROUP_DESC #Change the DB Subnet Group Description
+  subnetIDs:
+    - $SUBNET_AZ1 #Change the Subnet ID
+    - $SUBNET_AZ2 #Change the Subnet ID
+  tags:
+    - key: $DB_CLUSTER_TAG_KEY #Change the tag key
+      value: $DB_CLUSTER_TAG_VALUE #Change the tag value
