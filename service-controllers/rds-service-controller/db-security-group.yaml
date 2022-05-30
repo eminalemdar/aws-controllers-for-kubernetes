@@ -1,0 +1,7 @@
+apiVersion: rds.services.k8s.aws/v1alpha1
+kind: DBSecurityGroup
+metadata:
+  name: $DB_SECURITY_GROUP_NAME #Change the DB Security Group Name
+spec:
+  name: $DB_SECURITY_GROUP_NAME #Change the DB Security Group Name
+  description: $DB_SECURITY_GROUP_DESC #Change the DB Security Group Description
