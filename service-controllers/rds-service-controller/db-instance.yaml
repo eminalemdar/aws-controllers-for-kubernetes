@@ -1,0 +1,26 @@
+apiVersion: rds.services.k8s.aws/v1alpha1
+kind: DBInstance
+metadata:
+  name: $DB_INSTANCE_ID #Change the DB Instance Name
+spec:
+  allocatedStorage: 5 #Change the Storage Size
+  autoMinorVersionUpgrade: false
+  availabilityZone: eu-west-1a #Change the AZ accordingly
+  backupRetentionPeriod: 14 #Change the Backup Retention Period
+  copyTagsToSnapshot: false
+  dbInstanceClass: db.t3.micro #Change the DB Instance class
+  dbInstanceIdentifier: $DB_INSTANCE_ID #Change the DB Instance Name
+  dbName: $DB_NAME #Change the DB Name
+  dbSubnetGroupName: $DB_SUBNET_GROUP_NAME #Change the DB Subnet Group Name
+  dbSecurityGroups:
+  - $DB_SECURITY_GROUP_NAME #Change the DB Security Group Name
+  engine: postgres #Change the DB Engine accordingly
+  engineVersion: "14.1" #Change the DB Engine Version accordingly
+  deletionProtection: true
+  storageEncrypted: false
+  masterUsername: root #Change the DB Master Username
+  masterUserPassword:
+    namespace: $MASTER_USER_PASS_SECRET_NAMESPACE #Reference to the Kubernetes Secret
+    name: $MASTER_USER_PASS_SECRET_NAME #Reference to the Kubernetes Secret
+    key: $MASTER_USER_PASS_SECRET_KEY #Reference to the Kubernetes Secret
+  multiAZ: False

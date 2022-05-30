@@ -1,0 +1,29 @@
+apiVersion: rds.services.k8s.aws/v1alpha1
+kind: DBCluster
+metadata:
+  name: $DB_CLUSTER_ID #Change the DB Cluster Name
+spec:
+  availabilityZones: #Change the Availability Zone Names accordingly
+  - $AZ_A 
+    $AZ_B 
+    $AZ_C
+  backupRetentionPeriod: 14 #Change the Backup Retention Period accordingly
+  dbClusterIdentifier: $DB_CLUSTER_ID #Change the DB Cluster Name
+  databaseName: $DB_NAME #Change the DB Name
+  engine: aurora-mysql #Change the DB Engine accordingly
+  engineMode: serverless #Change the DB Engine modes accordingly
+  deletionProtection: false
+  engineVersion: "5.7.12" #Change the DB Engine Version
+  storageEncrypted: false
+  scalingConfiguration: #You can change the AutoScaling Configuration accordingly
+    autoPause: true
+    maxCapacity: 5
+    minCapacity: 1
+  masterUsername: root #Change the DB Master Username
+  masterUserPassword:
+    namespace: $MASTER_USER_PASS_SECRET_NAMESPACE #Reference to the Kubernetes Secret
+    name: $MASTER_USER_PASS_SECRET_NAME #Reference to the Kubernetes Secret
+    key: $MASTER_USER_PASS_SECRET_KEY #Reference to the Kubernetes Secret
+  tags:
+    - key: $DB_CLUSTER_TAG_KEY #Change the tag key
+      value: $DB_CLUSTER_TAG_VALUE #Change the tag value
