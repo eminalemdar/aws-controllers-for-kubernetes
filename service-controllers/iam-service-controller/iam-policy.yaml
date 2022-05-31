@@ -1,0 +1,12 @@
+apiVersion: iam.services.k8s.aws/v1alpha1
+kind: Policy
+metadata:
+  name: $POLICY_NAME #Change the Policy Name
+spec:
+  name: $POLICY_NAME #Change the Policy Name
+  description: $POLICY_DESCRIPTION #Change the Policy Name
+  #You can change the Policy Document. This example Policy allows to list all S3 Buckets
+  policyDocument: '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"s3:ListAllMyBuckets","Resource":"arn:aws:s3:::*"},{"Effect":"Allow","Action":["s3:List*"],"Resource":["*"]}]}'
+  tags:
+    - key: $IAM_ROLE_TAG_KEY #Change the tag key
+      value: $IAM_ROLE_TAG_VALUE #Change the tag value

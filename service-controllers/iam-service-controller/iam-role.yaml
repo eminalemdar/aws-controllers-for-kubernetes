@@ -1,11 +1,3 @@
-# IAM Service Controller Examples
-
-In this folder, you can find general examples for creating IAM Resources from your
-Kubernetes cluster with ACK (AWS Controllers for Kubernetes).
-
-Basic IAM Role creation:
-
-```yaml
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Role
 metadata:
@@ -13,6 +5,9 @@ metadata:
 spec:
   name: $ROLE_NAME #Change the IAM Role Name
   description: $ROLE_DESCRIPTION #Change the IAM Role Description
+  maxSessionDuration: $MAX_SESSION_DURATION #Change the IAM Role Max Session Duration
+  policies:
+  - $IAM_POLICY_NAME #You can add IAM Policies to this array
   #You can edit the Policy Document.
   assumeRolePolicyDocument: >
     {
@@ -30,16 +25,3 @@ spec:
   tags:
     - key: $IAM_ROLE_TAG_KEY #Change the tag key
       value: $IAM_ROLE_TAG_VALUE #Change the tag value
-```
-
-## Create the IAM Resource
-
-```bash
-kubectl apply -f <file_name> #Change the file name accordingly
-```
-
-## Delete the IAM Resource
-
-```bash
-kubectl delete role <role_name> #Change the role name accordingly and also change the resource name accordingly
-```
