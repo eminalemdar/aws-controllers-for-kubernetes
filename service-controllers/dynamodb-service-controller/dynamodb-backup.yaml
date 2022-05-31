@@ -1,0 +1,7 @@
+apiVersion: dynamodb.services.k8s.aws/v1alpha1
+kind: Backup
+metadata:
+  name: $BACKUP_NAME #Change the Backup Name
+spec:
+  backupName: $BACKUP_NAME #Change the Backup Name
+  tableName: $TABLE_NAME #Change the DynamoDB Table Name

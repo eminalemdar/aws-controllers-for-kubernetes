@@ -1,11 +1,3 @@
-# DynamoDB Service Controller Examples
-
-In this folder, you can find general examples for creating DynamoDB Resources from your
-Kubernetes cluster with ACK (AWS Controllers for Kubernetes).
-
-Basic DynamoDB Table creation:
-
-```yaml
 apiVersion: dynamodb.services.k8s.aws/v1alpha1
 kind: Table
 metadata:
@@ -15,32 +7,30 @@ spec:
   attributeDefinitions:
     - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
       attributeType: S
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      attributeType: S
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      attributeType: S
   keySchema:
     - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
       keyType: HASH
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      keyType: RANGE
   localSecondaryIndexes:
     - indexName: LastPostIndex
       keySchema:
         - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
           keyType: HASH
+        - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+          keyType: RANGE
       projection:
         projectionType: KEYS_ONLY
   provisionedThroughput:
     readCapacityUnits: 5 #You can change the Capacity units accordingly
     writeCapacityUnits: 5 #You can change the Capacity units accordingly
+  streamSpecification:
+    streamEnabled: true
+    streamViewType: "NEW_AND_OLD_IMAGES"
   tags:
     - key: $DYNAMODB_TABLE_TAG_KEY #Change the tag key
       value: $DYNAMODB_TABLE_TAG_VALUE #Change the tag value
-```
-
-## Create the DynamoDB Resource
-
-```bash
-kubectl apply -f <file_name> #Change the file name accordingly
-```
-
-## Delete the DynamoDB Resource
-
-```bash
-kubectl delete table <table_name> #Change the table name accordingly and also change the resource name accordingly
-```
