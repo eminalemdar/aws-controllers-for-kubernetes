@@ -1,0 +1,36 @@
+apiVersion: dynamodb.services.k8s.aws/v1alpha1
+kind: Table
+metadata:
+  name: $TABLE_NAME #Change the DynamoDB Table Name
+spec:
+  tableName: $TABLE_NAME #Change the DynamoDB Table Name
+  attributeDefinitions:
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      attributeType: S
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      attributeType: S
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      attributeType: S
+  keySchema:
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      keyType: HASH
+    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+      keyType: RANGE
+  localSecondaryIndexes:
+    - indexName: LastPostIndex
+      keySchema:
+        - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+          keyType: HASH
+        - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+          keyType: RANGE
+      projection:
+        projectionType: KEYS_ONLY
+  provisionedThroughput:
+    readCapacityUnits: 5 #You can change the Capacity units accordingly
+    writeCapacityUnits: 5 #You can change the Capacity units accordingly
+  streamSpecification:
+    streamEnabled: true
+    streamViewType: "NEW_AND_OLD_IMAGES"
+  tags:
+    - key: $DYNAMODB_TABLE_TAG_KEY #Change the tag key
+      value: $DYNAMODB_TABLE_TAG_VALUE #Change the tag value
