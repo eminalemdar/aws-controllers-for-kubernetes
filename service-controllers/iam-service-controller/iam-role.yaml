@@ -1,0 +1,27 @@
+apiVersion: iam.services.k8s.aws/v1alpha1
+kind: Role
+metadata:
+  name: $ROLE_NAME #Change the IAM Role Name
+spec:
+  name: $ROLE_NAME #Change the IAM Role Name
+  description: $ROLE_DESCRIPTION #Change the IAM Role Description
+  maxSessionDuration: $MAX_SESSION_DURATION #Change the IAM Role Max Session Duration
+  policies:
+  - $IAM_POLICY_NAME #You can add IAM Policies to this array
+  #You can edit the Policy Document.
+  assumeRolePolicyDocument: >
+    {
+      "Version":"2012-10-17",
+      "Statement": [{
+        "Effect":"Allow",
+        "Principal": {
+          "Service": [
+            "ec2.amazonaws.com"
+          ]
+        },
+        "Action": ["sts:AssumeRole"]
+      }]
+    }
+  tags:
+    - key: $IAM_ROLE_TAG_KEY #Change the tag key
+      value: $IAM_ROLE_TAG_VALUE #Change the tag value
