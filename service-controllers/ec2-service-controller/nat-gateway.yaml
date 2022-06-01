@@ -1,0 +1,13 @@
+apiVersion: ec2.services.k8s.aws/v1alpha1
+kind: NATGateway
+metadata:
+  name: $NAT_GATEWAY_NAME #Change the Nat Gateway Name
+spec:
+  allocationID: $ALLOCATION_ID #Add the Allocation ID of an Elastic IP for Public Nat Gateways
+  subnetID: $SUBNET_ID #Change the Subnet ID
+  connectivityType: "public"
+  tagSpecifications:
+  - resourceType: "natgateway"
+    tags:
+    - key: $NAT_GW_TAG_KEY #Change the tag key
+      value: $NAT_GW_TAG_VALUE #Change the tag value
