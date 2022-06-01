@@ -1,0 +1,10 @@
+apiVersion: ec2.services.k8s.aws/v1alpha1
+kind: ElasticIPAddress
+metadata:
+  name: $ADDRESS_NAME #Change the EIP Name
+spec:
+  tagSpecifications:
+  - resourceType: "elasticipaddress"
+    tags:
+    - key: $EIP_TAG_KEY #Change the tag key
+      value: $EIP_TAG_VALUE #Change the tag value
