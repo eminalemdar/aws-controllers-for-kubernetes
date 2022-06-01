@@ -1,0 +1,9 @@
+apiVersion: ec2.services.k8s.aws/v1alpha1
+kind: VPC
+metadata:
+  name: $VPC_NAME #Change the VPC Name
+spec:
+  cidrBlock: $CIDR_BLOCK #Change the CIDR Block
+  enableDNSSupport: true
+  enableDNSHostnames: true
+  instanceTenancy: "default" #or dedicated
