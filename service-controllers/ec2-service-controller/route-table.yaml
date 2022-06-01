@@ -1,0 +1,16 @@
+apiVersion: ec2.services.k8s.aws/v1alpha1
+kind: RouteTable
+metadata:
+  name: $ROUTE_TABLE_NAME #Change the Route Table Name
+spec:
+  routes:
+    - destinationCIDRBlock: $DEST_CIDR_BLOCK #Change the Destination CIDR Block
+      gatewayID: $IGW_ID #Change the Internet Gateway ID
+    - destinationCIDRBlock: $DEST_CIDR_BLOCK #Change the Destination CIDR Block
+      natGatewayID: $NGW_ID #Change the NAT Gateway ID
+  vpcID: $VPC_ID #Change the VPC ID
+  tagSpecifications:
+  - resourceType: "routetable"
+    tags:
+    - key: $ROUTE_TABLE_TAG_KEY #Change the tag key
+      value: $ROUTE_TABLE_TAG_VALUE #Change the tag value
