@@ -1,0 +1,14 @@
+apiVersion: ec2.services.k8s.aws/v1alpha1
+kind: DHCPOptions
+metadata:
+  name: $DHCP_OPTIONS_NAME #Change the DHCP Option Name
+spec:
+  dhcpConfigurations:
+    - key: $DHCP_KEY_1 #Change the DHCP Key
+      values:
+        - $DHCP_VAL_1 #Change the DHCP Value
+  tagSpecifications:
+  - resourceType: "dhcpoptions"
+    tags:
+    - key: $DHCP_TAG_KEY #Change the tag key
+      value: $DHCP_TAG_VALUE #Change the tag value

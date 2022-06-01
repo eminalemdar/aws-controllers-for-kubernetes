@@ -1,0 +1,13 @@
+apiVersion: ec2.services.k8s.aws/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: $SECURITY_GROUP_NAME #Change Security Group Name
+spec:
+  description: $SECURITY_GROUP_DESCRIPTION #Change Security Group Description
+  name: $SECURITY_GROUP_NAME #Change Security Group Name
+  vpcID: $VPC_ID #Change the VPC ID
+  tagSpecifications:
+  - resourceType: "securitygroup"
+    tags:
+    - key: $SECURITY_GROUP_TAG_KEY #Change the tag key
+      value: $SECURITY_GROUP_TAG_VALUE #Change the tag value
