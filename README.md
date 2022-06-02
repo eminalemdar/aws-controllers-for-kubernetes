@@ -34,8 +34,6 @@ Terraform codes in this repository creates following resources:
 
 - EKS Managed Node group
 
-- Enable IAM Roles for Service Accounts (IRSA) for EKS Cluster
-
 > You can update the Terraform codes according to your requirements and environment.
 
 ### Installation of EKS Cluster
