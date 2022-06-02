@@ -14,7 +14,7 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
   cluster_version                 = "1.22"
-  enable_irsa                     = true
+  enable_irsa                     = false
 
   cluster_addons = {
     coredns = {
