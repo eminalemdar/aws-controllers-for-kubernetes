@@ -49,6 +49,12 @@ terraform apply --auto-approve
 > - These resources are not Free Tier eligible.
 > - You need to configure AWS Authentication for Terraform with either [Environment Variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set) or AWS CLI [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html#cli-configure-profiles-create).
 
+You can connect to your cluster using this command:
+
+```bash
+aws eks --region <region> update-kubeconfig --name <cluster_name>
+```
+
 ### Installation of a Service Controller
 
 When you want to install a Service Controller and configure IAM Permissions you can run `./ack_controller_install.sh <service_name>` and change the *service_name* accordingly.
