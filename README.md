@@ -65,6 +65,16 @@ The [script](./ack_controller_install.sh) has two functions called install and p
 
 - Permissions function creates OIDC identity provider for the Kubernetes cluster and creates IAM Roles for for Service Accounts of the Service Controllers.
 
-> The Terraform script in this repository configures IRSA when launching EKS Cluster.
-> If you have used this Terraform script when installing your Kubernetes Cluster,
-> You can comment out the sections in the script for skipping that part.
+### Cleanup
+
+When you want to delete all the resources created in this repository, you can run `./cleanup.sh <service_name>` script in the root directory of this repository and change the *service_name* accordingly.
+
+The [script](./cleanup.sh) has one function and does the following:
+
+- Uninstalls the Helm Chart for Service Controller
+
+- Deletes the CRDs created for Service Controller
+
+- Deletes the OIDC Provider of EKS Cluster
+
+- Deletes the EKS Cluster created with Terraform
