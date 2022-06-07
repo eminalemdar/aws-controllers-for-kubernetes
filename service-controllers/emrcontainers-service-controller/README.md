@@ -6,12 +6,18 @@ Kubernetes cluster with ACK (AWS Controllers for Kubernetes).
 Basic EMR Container Virtual Cluster creation:
 
 ```yaml
-apiVersion: EMR Containers.services.k8s.aws/v1alpha1
-kind: Key
+apiVersion: emrcontainers.services.k8s.aws/v1alpha1
+kind: VirtualCluster
 metadata:
-  name: $KEY_NAME #Change the EMR Containers Key Name
+  name: $VIRTUALCLUSTER_NAME #Change the Virtual Cluster Name
 spec:
-  description: "This is an example Key created with ACK Examples"
+  name: $VIRTUALCLUSTER_NAME #Change the Virtual Cluster Name
+  containerProvider:
+    id: $EKS_CLUSTER_NAME #Change the EKS Cluster Name
+    type_: EKS
+    info:
+      eksInfo:
+        namespace: $KUBERNETES_NAMESPACE #Change the Kubernetes Namespace
 ```
 
 ## Create the EMR Container Virtual Cluster
