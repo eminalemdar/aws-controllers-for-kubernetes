@@ -1,0 +1,9 @@
+apiVersion: kms.services.k8s.aws/v1alpha1
+kind: CustomKeyStore
+metadata:
+  name: $CUSTOM_KEY_STORE_NAME #Change the Custom Key Store Name
+spec:
+  cloudHsmClusterID: $CLOUD_HSM_CLUSTER_ID #Change the Cloud HSM Cluster ID
+  keyStorePassword: $KEY_STORE_PASSWORD #Change the Key Store Password
+  name: $CUSTOM_KEY_STORE_NAME #Change the Custom Key Store Name
+  trustAnchorCertificate: $TRUST_ANCHOR_CERTIFICATE #Add the Certificate data here
