@@ -1,0 +1,15 @@
+apiVersion: emrcontainers.services.k8s.aws/v1alpha1
+kind: VirtualCluster
+metadata:
+  name: $VIRTUALCLUSTER_NAME #Change the Virtual Cluster Name
+spec:
+  name: $VIRTUALCLUSTER_NAME #Change the Virtual Cluster Name
+  containerProvider:
+    id: $EKS_CLUSTER_NAME #Change the EKS Cluster Name
+    type_: EKS
+    info:
+      eksInfo:
+        namespace: $KUBERNETES_NAMESPACE #Change the Kubernetes Namespace
+  tags:
+    - key: $VIRTUAL_CLUSTER_TAG_KEY #Change the tag key
+      value: $VIRTUAL_CLUSTER_TAG_VALUE #Change the tag value
