@@ -9,7 +9,7 @@ Basic KMS Key creation:
 apiVersion: kms.services.k8s.aws/v1alpha1
 kind: Key
 metadata:
-  name: $KEY_NAME
+  name: $KEY_NAME #Change the KMS Key Name
 spec:
   description: "This is an example Key created with ACK Examples"
 ```
