@@ -30,3 +30,4 @@ override.tf.json
 # example: *tfplan*
 
 .DS_Store
+trust.json
