@@ -1,0 +1,11 @@
+apiVersion: kms.services.k8s.aws/v1alpha1
+kind: Key
+metadata:
+  name: $KEY_NAME #Change the KMS Key Name
+spec:
+  bypassPolicyLockoutSafetyCheck: false
+  description: "Key created by ACK tests"
+  multiRegion: false #You can Change the value
+  tags:
+  - tagKey: $KMS_KEY_TAG_KEY #Change the tag key
+    tagValue: $KMS_KEY_TAG_VALUE #Change the tag value
