@@ -14,9 +14,9 @@ cleanup(){
   echo "===================================================="
 
   declare CHART_EXPORT_PATH="/tmp/chart"
-  declare ACCOUNT_ID=$(aws sts get-caller-identity | python3 -c "import sys,json; print (json.load(sys.stdin)['Account'])")
+  declare ACCOUNT_ID=$(aws sts get-caller-identity --output text --query 'Account')
   declare EKS_CLUSTER_NAME="eks-cluster-for-ack"
-  declare OIDCURL=$(aws eks describe-cluster --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION} --query "cluster.identity.oidc.issuer" --output text  | python3 -c "import sys; print (sys.stdin.readline().replace('https://',''))")
+  declare OIDCURL=$(aws eks describe-cluster --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION} --query "cluster.identity.oidc.issuer" --output text | sed -r 's/https:\/\///')
 
   echo "===================================================="
   echo "Uninstalling the ACK Service Controller."
