@@ -24,11 +24,11 @@ If you don't have a Kubernetes cluster, you can create an EKS cluster with Terra
 
 ## Terraform Codes
 
+Terraform codes in this repository uses [Amazon EKS Blueprints for Terraform](https://aws-ia.github.io/terraform-aws-eks-blueprints/main/)
+
 Terraform codes in this repository creates following resources:
 
 - VPC with 6 subnets (3 Private, 3 Public)
-
-- Security Group for Worker Instances in EKS Cluster
 
 - EKS Cluster with Kubernetes version set to 1.22
 
@@ -54,6 +54,8 @@ You can connect to your cluster using this command:
 ```bash
 aws eks --region <region> update-kubeconfig --name <cluster_name>
 ```
+
+> You need to change `region` and `cluster_name` parameters.
 
 ### Installation of a Service Controller
 
