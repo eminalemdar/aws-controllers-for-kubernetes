@@ -9,9 +9,9 @@ Basic ECR creation:
 apiVersion: ecr.services.k8s.aws/v1alpha1
 kind: Repository
 metadata:
-  name: $REPOSITORY_NAME #Change the Repository Name
+  name: $REPOSITORY_NAME
 spec:
-  name: $REPOSITORY_NAME #Change the Repository Name
+  name: $REPOSITORY_NAME
 ```
 
 ## Create the ECR Repository

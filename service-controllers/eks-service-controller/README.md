@@ -9,17 +9,17 @@ Basic EKS creation:
 apiVersion: eks.services.k8s.aws/v1alpha1
 kind: Cluster
 metadata:
-  name: $CLUSTER_NAME #Change the Cluster Name
+  name: $CLUSTER_NAME
 spec:
-  name: $CLUSTER_NAME #Change the Cluster Name
-  roleARN: $CLUSTER_ROLE #Change the Cluster Role
+  name: $CLUSTER_NAME
+  roleARN: $CLUSTER_ROLE
   resourcesVPCConfig:
     endpointPrivateAccess: true
     endpointPublicAccess: false
     subnetIDs:
-      - "$PUBLIC_SUBNET_1" #Change the first Subnet ID
-      - "$PUBLIC_SUBNET_2" #Change the second Subnet ID
-  version: $KUBERNETES_VERSION #Change the Kubernetes Version
+      - "$PUBLIC_SUBNET_1" 
+      - "$PUBLIC_SUBNET_2" 
+  version: $KUBERNETES_VERSION 
 ```
 
 ## Create the EKS Repository

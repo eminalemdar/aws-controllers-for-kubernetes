@@ -9,11 +9,10 @@ Basic IAM Role creation:
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Role
 metadata:
-  name: $ROLE_NAME #Change the IAM Role Name
+  name: $ROLE_NAME 
 spec:
-  name: $ROLE_NAME #Change the IAM Role Name
-  description: $ROLE_DESCRIPTION #Change the IAM Role Description
-  #You can edit the Policy Document.
+  name: $ROLE_NAME 
+  description: $ROLE_DESCRIPTION 
   assumeRolePolicyDocument: >
     {
       "Version":"2012-10-17",
@@ -28,8 +27,8 @@ spec:
       }]
     }
   tags:
-    - key: $IAM_ROLE_TAG_KEY #Change the tag key
-      value: $IAM_ROLE_TAG_VALUE #Change the tag value
+    - key: $IAM_ROLE_TAG_KEY 
+      value: $IAM_ROLE_TAG_VALUE 
 ```
 
 ## Create the IAM Resource

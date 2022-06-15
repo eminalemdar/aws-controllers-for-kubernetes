@@ -1,11 +1,12 @@
+---
 apiVersion: rds.services.k8s.aws/v1alpha1
 kind: DBParameterGroup
 metadata:
-  name: $DB_PARAMETER_GROUP_NAME #Change the DB Parameter Group Name
+  name: $DB_PARAMETER_GROUP_NAME 
 spec:
-  name: $DB_PARAMETER_GROUP_NAME #Change the DB Parameter Group Name
-  description: $DB_PARAMETER_GROUP_DESC #Change the DB Parameter Group Description
-  family: postgres #Change the DB Engine Family
+  name: $DB_PARAMETER_GROUP_NAME 
+  description: $DB_PARAMETER_GROUP_DESC 
+  family: postgres 
   #parameters:
   #- allowedValues: string
   #  applyMethod: string
@@ -20,5 +21,5 @@ spec:
   #  supportedEngineModes:
   #  - string
   tags:
-    - key: $DB_CLUSTER_TAG_KEY #Change the tag key
-      value: $DB_CLUSTER_TAG_VALUE #Change the tag value
+    - key: $DB_CLUSTER_TAG_KEY 
+      value: $DB_CLUSTER_TAG_VALUE 

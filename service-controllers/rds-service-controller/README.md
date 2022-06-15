@@ -9,20 +9,20 @@ Basic RDS DB Instance creation:
 apiVersion: rds.services.k8s.aws/v1alpha1
 kind: DBInstance
 metadata:
-  name: $DB_INSTANCE_ID #Change the DB Instance Name
+  name: $DB_INSTANCE_ID 
 spec:
-  allocatedStorage: 5 #You can change the size of the storage
-  dbInstanceClass: db.t3.micro #You can change the Instance Class
-  dbInstanceIdentifier: $DB_INSTANCE_ID #Change the DB Instance Name
-  dbSubnetGroupName: $DB_SUBNET_GROUP_NAME #Change the DB Subnet Group Name
-  engine: postgres #You can change the DB Engine
-  engineVersion: "14.1" #You can change the DB Engine version
-  masterUsername: root #Change it accordingly
+  allocatedStorage: 5
+  dbInstanceClass: db.t3.micro 
+  dbInstanceIdentifier: $DB_INSTANCE_ID 
+  dbSubnetGroupName: $DB_SUBNET_GROUP_NAME 
+  engine: postgres 
+  engineVersion: "14.1" 
+  masterUsername: root 
   masterUserPassword:
-    namespace: $MASTER_USER_PASS_SECRET_NAMESPACE #Reference to the Kubernetes Secret
-    name: $MASTER_USER_PASS_SECRET_NAME #Reference to the Kubernetes Secret
-    key: $MASTER_USER_PASS_SECRET_KEY #Reference to the Kubernetes Secret
-  multiAZ: False #You can change the configuration accordingly.
+    namespace: $MASTER_USER_PASS_SECRET_NAMESPACE 
+    name: $MASTER_USER_PASS_SECRET_NAME 
+    key: $MASTER_USER_PASS_SECRET_KEY 
+  multiAZ: False 
 ```
 
 ## Create the RDS Resource

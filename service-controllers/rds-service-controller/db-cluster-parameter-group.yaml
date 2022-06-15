@@ -1,10 +1,11 @@
+---
 apiVersion: rds.services.k8s.aws/v1alpha1
 kind: DBClusterParameterGroup
 metadata:
-  name: $DB_CLUSTER_PARAMETER_GROUP_NAME #Change the DB Cluster Parameter Group Name
+  name: $DB_CLUSTER_PARAMETER_GROUP_NAME 
 spec:
-  name: $DB_CLUSTER_PARAMETER_GROUP_NAME #Change the DB Cluster Parameter Group Name
-  description: $DB_CLUSTER_PARAMETER_GROUP_DESC #Change the DB Cluster Parameter Group Description
+  name: $DB_CLUSTER_PARAMETER_GROUP_NAME 
+  description: $DB_CLUSTER_PARAMETER_GROUP_DESC 
   family: "aurora-mysql5.7"
   #parameters:
   #- allowedValues: string
@@ -20,5 +21,5 @@ spec:
   #  supportedEngineModes:
   #  - string
   tags:
-    - key: $DB_CLUSTER_TAG_KEY #Change the tag key
-      value: $DB_CLUSTER_TAG_VALUE #Change the tag value
+    - key: $DB_CLUSTER_TAG_KEY 
+      value: $DB_CLUSTER_TAG_VALUE 

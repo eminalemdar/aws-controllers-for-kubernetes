@@ -9,15 +9,15 @@ Basic EMR Container Virtual Cluster creation:
 apiVersion: emrcontainers.services.k8s.aws/v1alpha1
 kind: VirtualCluster
 metadata:
-  name: $VIRTUALCLUSTER_NAME #Change the Virtual Cluster Name
+  name: $VIRTUALCLUSTER_NAME
 spec:
-  name: $VIRTUALCLUSTER_NAME #Change the Virtual Cluster Name
+  name: $VIRTUALCLUSTER_NAME
   containerProvider:
-    id: $EKS_CLUSTER_NAME #Change the EKS Cluster Name
+    id: $EKS_CLUSTER_NAME
     type_: EKS
     info:
       eksInfo:
-        namespace: $KUBERNETES_NAMESPACE #Change the Kubernetes Namespace
+        namespace: $KUBERNETES_NAMESPACE 
 ```
 
 ## Create the EMR Container Virtual Cluster

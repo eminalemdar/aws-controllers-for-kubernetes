@@ -1,22 +1,23 @@
+---
 apiVersion: eks.services.k8s.aws/v1alpha1
 kind: Nodegroup
 metadata:
-  name: $NODEGROUP_NAME #Change the Node Group Name
+  name: $NODEGROUP_NAME
 spec:
-  name: $NODEGROUP_NAME #Change the Node Group Name
-  clusterName: $CLUSTER_NAME #Change the Cluster Name
-  amiType: $AMI_TYPE #Change the AMI Type ex: AL2_x86_64
-  diskSize: $DISK_SIZE #Integer Change the Disk Size
+  name: $NODEGROUP_NAME 
+  clusterName: $CLUSTER_NAME 
+  amiType: $AMI_TYPE 
+  diskSize: $DISK_SIZE 
   instanceTypes:
-  - $INSTANCE_TYPE #Change the Instance Type ex: t3.large
+  - $INSTANCE_TYPE 
   #https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html#managed-node-group-capacity-types
   subnets:
-    - "$PUBLIC_SUBNET_1" #Change the Subnet ID
-    - "$PUBLIC_SUBNET_2" #Change the Subnet ID
+    - "$PUBLIC_SUBNET_1" 
+    - "$PUBLIC_SUBNET_2" 
   scalingConfig:
     minSize: 1
     maxSize: 1
     desiredSize: 1
   updateConfig: 
-    maxUnavailable: $NUMBER_OF_NODES #Optional / Integer
-    maxUnavailablePercentage: $NUMBER_OF_PERCENTAGE #Optional / Integer
+    maxUnavailable: $NUMBER_OF_NODES 
+    maxUnavailablePercentage: $NUMBER_OF_PERCENTAGE 

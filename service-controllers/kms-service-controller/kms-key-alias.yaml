@@ -1,7 +1,8 @@
+---
 apiVersion: kms.services.k8s.aws/v1alpha1
 kind: Alias
 metadata:
-  name: $ALIAS_NAME #Change the Alias Name
+  name: $ALIAS_NAME 
 spec:
-  name: alias/$ALIAS_NAME #Change the Alias Name
-  targetKeyID: $TARGET_KEY_ID #Change the Target KMS Key ID
+  name: alias/$ALIAS_NAME 
+  targetKeyID: $TARGET_KEY_ID 
