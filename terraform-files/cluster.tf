@@ -1,48 +1,14 @@
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
+module "eks_cluster" {
+  source = "github.com/aws-ia/terraform-aws-eks-blueprints?ref=v4.0.9"
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
 
-module "eks" {
-  source = "terraform-aws-modules/eks/aws"
-  version = "18.21.0"
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnets
 
-  cluster_name                    = var.cluster_name
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
-  cluster_version                 = "1.22"
-  enable_irsa                     = false
-
-  cluster_addons = {
-    coredns = {
-      resolve_conflicts = "OVERWRITE"
-    }
-    kube-proxy = {}
-    vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
-    }
-  }
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
-
-  # Extend cluster security group rules
-  cluster_security_group_additional_rules = {
-    egress_nodes_ephemeral_ports_tcp = {
-      description                = "To node 1025-65535"
-      protocol                   = "tcp"
-      from_port                  = 1025
-      to_port                    = 65535
-      type                       = "egress"
-      source_node_security_group = true
-    }
-  }
-
-  # Extend node-to-node security group rules
   node_security_group_additional_rules = {
+    # Extend node-to-node security group rules. Recommended and required for the Add-ons
     ingress_self_all = {
       description = "Node to node all ports/protocols"
       protocol    = "-1"
@@ -51,6 +17,8 @@ module "eks" {
       type        = "ingress"
       self        = true
     }
+
+    # Recommended outbound traffic for Node groups
     egress_all = {
       description      = "Node all egress"
       protocol         = "-1"
@@ -60,40 +28,86 @@ module "eks" {
       cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
     }
+    # Allows Control Plane Nodes to talk to Worker nodes on all ports. Added this to simplify the example and further avoid issues with Add-ons communication with Control plane.
+    # This can be restricted further to specific port based on the requirement for each Add-on e.g., metrics-server 4443, spark-operator 8080, karpenter 8443 etc.
+    # Change this according to your security requirements if needed
+    ingress_cluster_to_node_all_traffic = {
+      description                   = "Cluster API to Nodegroup all traffic"
+      protocol                      = "-1"
+      from_port                     = 0
+      to_port                       = 0
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
   }
 
-  # EKS Managed Node Group(s)
-  eks_managed_node_group_defaults = {
-    ami_type       = "AL2_x86_64"
-    instance_types = ["m6i.large", "m5.large", "m5n.large", "m5zn.large"]
-
-    attach_cluster_primary_security_group = true
-    vpc_security_group_ids                = [aws_security_group.worker_group.id]
-  }
-
-  eks_managed_node_groups = {
-    node_group_1 = {
-      min_size     = 1
-      max_size     = 5
-      desired_size = 1
-
-      instance_types = ["t3.large"]
-      capacity_type  = "ON_DEMAND"
-      labels = {
-        Environment = "ack"
-      }
-
-      update_config = {
-        max_unavailable_percentage = 50 # or set `max_unavailable`
-      }
-
-      tags = {
-        Name = "worker_group"
-      }
+  managed_node_groups = {
+    node_group = {
+      node_group_name      = "managed-ondemand"
+      instance_types       = ["t3.large"]
+      subnet_ids           = module.vpc.private_subnets
+      force_update_version = true
+      min_size             = 1
+      max_size             = 1
+      desired_size         = 1
     }
   }
 
   tags = {
       Name = var.cluster_name
   }
+}
+
+data "aws_eks_addon_version" "latest" {
+  for_each = toset(["vpc-cni", "coredns"])
+
+  addon_name         = each.value
+  kubernetes_version = module.eks_cluster.eks_cluster_version
+  most_recent        = true
+}
+
+data "aws_eks_addon_version" "default" {
+  for_each = toset(["kube-proxy"])
+
+  addon_name         = each.value
+  kubernetes_version = module.eks_cluster.eks_cluster_version
+  most_recent        = false
+}
+
+
+module "eks_kubernetes_addons" {
+  source = "github.com/aws-ia/terraform-aws-eks-blueprints//modules/kubernetes-addons?ref=v4.0.9"
+
+  eks_cluster_id               = module.eks_cluster.eks_cluster_id
+  eks_cluster_endpoint         = module.eks_cluster.eks_cluster_endpoint
+  eks_cluster_version          = module.eks_cluster.eks_cluster_version
+  eks_oidc_provider            = module.eks_cluster.oidc_provider
+  eks_worker_security_group_id = module.eks_cluster.worker_node_security_group_id
+  auto_scaling_group_names     = module.eks_cluster.self_managed_node_group_autoscaling_groups
+
+  # EKS Addons
+  enable_amazon_eks_vpc_cni = true
+  amazon_eks_vpc_cni_config = {
+    addon_version     = data.aws_eks_addon_version.latest["vpc-cni"].version
+    resolve_conflicts = "OVERWRITE"
+  }
+
+  enable_amazon_eks_coredns = true
+  amazon_eks_coredns_config = {
+    addon_version     = data.aws_eks_addon_version.latest["coredns"].version
+    resolve_conflicts = "OVERWRITE"
+  }
+
+  enable_amazon_eks_kube_proxy = true
+  amazon_eks_kube_proxy_config = {
+    addon_version     = data.aws_eks_addon_version.default["kube-proxy"].version
+    resolve_conflicts = "OVERWRITE"
+  }
+
+  enable_amazon_eks_aws_ebs_csi_driver  = true
+
+  tags = {
+      Name = var.cluster_name
+  }
+
 }

@@ -7,6 +7,11 @@ variable "cluster_name" {
   default = "eks-cluster-for-ack"
 }
 
+variable "cluster_version" {
+  default = "1.22"
+  description = "Kubernetes version of the EKS Cluster"
+}
+
 variable "vpc_name" {
   default = "eks-vpc"
 }
