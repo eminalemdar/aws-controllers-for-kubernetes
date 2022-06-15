@@ -9,9 +9,9 @@ Basic VPC creation:
 apiVersion: ec2.services.k8s.aws/v1alpha1
 kind: VPC
 metadata:
-  name: $VPC_NAME #Change the VPC Name
+  name: $VPC_NAME
 spec:
-  cidrBlock: $CIDR_BLOCK #Change the CIDR Block
+  cidrBlock: $CIDR_BLOCK
 ```
 
 ## Create the EC2 Resource

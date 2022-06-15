@@ -1,18 +1,18 @@
 apiVersion: ec2.services.k8s.aws/v1alpha1
 kind: VPCEndpoint
 metadata:
-  name: $VPC_ENDPOINT_NAME #Change the VPC Endpoint Name
+  name: $VPC_ENDPOINT_NAME
 spec:
-  serviceName: $SERVICE_NAME #Change the Service Name
-  vpcID: $VPC_ID #Change the VPC ID
+  serviceName: $SERVICE_NAME
+  vpcID: $VPC_ID
   routeTableIDs:
-  - $ROUTE_TABLE_ID #Change the Route Table ID
+  - $ROUTE_TABLE_ID
   securityGroupIDs:
-  - $SECURITY_GROUP_ID #Change the Security Group ID
+  - $SECURITY_GROUP_ID
   subnetIDs:
-  - $SUBNET_ID #Change the Subnet ID
+  - $SUBNET_ID
   tagSpecifications:
   - resourceType: "vpcendpoint"
     tags:
-    - key: $VPC_ENDPOINT_TAG_KEY #Change the tag key
-      value: $VPC_ENDPOINT_TAG_VALUE #Change the tag value
+    - key: $VPC_ENDPOINT_TAG_KEY
+      value: $VPC_ENDPOINT_TAG_VALUE

@@ -9,28 +9,28 @@ Basic DynamoDB Table creation:
 apiVersion: dynamodb.services.k8s.aws/v1alpha1
 kind: Table
 metadata:
-  name: $TABLE_NAME #Change the DynamoDB Table Name
+  name: $TABLE_NAME
 spec:
-  tableName: $TABLE_NAME #Change the DynamoDB Table Name
+  tableName: $TABLE_NAME
   attributeDefinitions:
-    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+    - attributeName: $ATTRIBUTE_NAME
       attributeType: S
   keySchema:
-    - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+    - attributeName: $ATTRIBUTE_NAME
       keyType: HASH
   localSecondaryIndexes:
     - indexName: LastPostIndex
       keySchema:
-        - attributeName: $ATTRIBUTE_NAME #Change the Attribute Name
+        - attributeName: $ATTRIBUTE_NAME
           keyType: HASH
       projection:
         projectionType: KEYS_ONLY
   provisionedThroughput:
-    readCapacityUnits: 5 #You can change the Capacity units accordingly
-    writeCapacityUnits: 5 #You can change the Capacity units accordingly
+    readCapacityUnits: 5
+    writeCapacityUnits: 5
   tags:
-    - key: $DYNAMODB_TABLE_TAG_KEY #Change the tag key
-      value: $DYNAMODB_TABLE_TAG_VALUE #Change the tag value
+    - key: $DYNAMODB_TABLE_TAG_KEY
+      value: $DYNAMODB_TABLE_TAG_VALUE
 ```
 
 ## Create the DynamoDB Resource

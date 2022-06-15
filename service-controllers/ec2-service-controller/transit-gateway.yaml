@@ -1,11 +1,11 @@
 apiVersion: ec2.services.k8s.aws/v1alpha1
 kind: TransitGateway
 metadata:
-  name: $TGW_NAME #Change the Transit Gateway Name
+  name: $TGW_NAME 
 spec:
-  description: $TGW_DESCRIPTION #Change the Transit Gateway Description
+  description: $TGW_DESCRIPTION
   options:
-    dnsSupport: $DNS_SUPPORT #Change the DNS Support
-    defaultRouteTableAssociation: $ROUTE_TABLE_ASSOCIATION #Change the Route Table Association
+    dnsSupport: $DNS_SUPPORT
+    defaultRouteTableAssociation: $ROUTE_TABLE_ASSOCIATION
     transitGatewayCIDRBlocks:
-    - $CIDR_BLOCK #Change the CIDR Block
+    - $CIDR_BLOCK
