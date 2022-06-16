@@ -21,26 +21,22 @@ install(){
   echo "===================================================="
   
   # Setting the Environment variables for Service Controller Helm Chart
-  declare -i HELM_EXPERIMENTAL_OCI=1
+  declare -i HELM_EXPERIMENTAL_OCI=1 # Only required for Helm below v3.8.0
   declare RELEASE_VERSION=$(curl -sL https://api.github.com/repos/aws-controllers-k8s/${SERVICE}-controller/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-  declare CHART_EXPORT_PATH="/tmp/chart"
   declare CHART_REF="${SERVICE}-chart"
   declare CHART_REPO="public.ecr.aws/aws-controllers-k8s/${CHART_REF}"
-  declare CHART_PACKAGE="${CHART_REF}-${RELEASE_VERSION}.tgz"
-  
-  mkdir -p "$CHART_EXPORT_PATH"
   
   echo "===================================================="
   echo "Installing the Service Controller Helm Chart."
   echo "===================================================="
   
-  # Pulling the Helm Chart from Official AWS Registry and installing it.
-  helm pull oci://${CHART_REPO} --version "$RELEASE_VERSION" -d "$CHART_EXPORT_PATH"
-  tar xvf ${CHART_EXPORT_PATH}/${CHART_PACKAGE} -C "$CHART_EXPORT_PATH"
-  
+  # Log into the ECR Public OCI repository
+  aws ecr-public get-login-password --region us-east-1 \
+    | helm registry login --username AWS --password-stdin public.ecr.aws
+
+  # Pulling the Helm Chart from Official AWS Registry and installing it.  
   helm install --create-namespace --namespace "$ACK_SYSTEM_NAMESPACE" ack-${SERVICE}-controller \
-      --set aws.region="$AWS_REGION" \
-      ${CHART_EXPORT_PATH}/${SERVICE}-chart
+      --set aws.region="$AWS_REGION" oci://${CHART_REPO} --version "$RELEASE_VERSION"
 }
 
 #####################################################################################################################

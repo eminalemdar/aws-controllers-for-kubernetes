@@ -46,7 +46,6 @@ cleanup(){
   echo "Deleting the EKS Cluster."
   echo "====================================================" 
 
-  cd terraform-files/
   terraform destroy --auto-approve
 }
 
