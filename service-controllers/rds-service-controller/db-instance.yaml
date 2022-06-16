@@ -13,8 +13,6 @@ spec:
   dbInstanceIdentifier: $DB_INSTANCE_ID 
   dbName: $DB_NAME 
   dbSubnetGroupName: $DB_SUBNET_GROUP_NAME 
-  dbSecurityGroups:
-  - $DB_SECURITY_GROUP_NAME 
   engine: postgres 
   engineVersion: "14.1" 
   deletionProtection: true
