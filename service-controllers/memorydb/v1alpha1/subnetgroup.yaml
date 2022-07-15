@@ -1,0 +1,13 @@
+---
+apiVersion: memorydb.services.k8s.aws/v1alpha1
+kind: SubnetGroup
+metadata:
+  name: $SUBNET_GROUP_NAME
+spec:
+  name: $SUBNET_GROUP_NAME
+  description: $DESCRIPTION
+  subnetIDs:
+  - $SUBNET_ID
+  tags:
+  - key: $SUBNET_GROUP_TAG_KEY
+    value: $SUBNET_GROUP_TAG_VALUE

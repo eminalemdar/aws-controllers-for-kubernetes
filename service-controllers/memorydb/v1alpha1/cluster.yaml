@@ -1,0 +1,22 @@
+---
+apiVersion: memorydb.services.k8s.aws/v1alpha1
+kind: Cluster
+metadata:
+  name: $CLUSTER_NAME
+spec:
+  name: $CLUSTER_NAME
+  aclName: $ACL_NAME
+  nodeType: $NODE_TYPE
+  engineVersion: $ENGINE_VERSION
+  autoMinorVersionUpgrade: true
+  numReplicasPerShard: $REPLICAS_PER_SHARD
+  numShards: $SHARDS
+  parameterGroupName: $PARAMETER_GROUP_NAME
+  port: $PORT
+  securityGroupIDs:
+  - $SECURITY_GROUP_ID
+  subnetGroupName: $SUBNET_GROUP
+  tlsEnabled: false
+  tags:
+    - key: $CLUSTER_TAG_KEY
+      value: $CLUSTER_TAG_VALUE
