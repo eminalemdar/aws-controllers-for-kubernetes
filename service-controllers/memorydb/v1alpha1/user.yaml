@@ -1,0 +1,17 @@
+---
+apiVersion: memorydb.services.k8s.aws/v1alpha1
+kind: User
+metadata:
+  name: $USER_NAME
+spec:
+  accessString: $ACCESS_STRING
+  authenticationMode: 
+    passwords:
+    - key: $PASSWORD_KEY
+      name: $NAME
+      namespace: $NAMESPACE
+    type_: $TYPE
+  name: $USER_NAME
+  tags:
+  - key: $USER_TAG_KEY
+    value: $USER_TAG_VALUE

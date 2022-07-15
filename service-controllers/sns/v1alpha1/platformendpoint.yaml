@@ -1,0 +1,10 @@
+---
+apiVersion: sns.services.k8s.aws/v1alpha1
+kind: PlatformEndpoint
+metadata:
+  name: $PLATFORM_ENDPOINT_NAME
+spec:
+  attributes: {}
+  customUserData: $USER_DATA
+  platformApplicationARN: $PLATFORM_APPLICATION_ARN
+  token: $TOKEN

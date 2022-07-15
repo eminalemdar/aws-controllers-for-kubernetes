@@ -1,0 +1,17 @@
+---
+apiVersion: cloudtrail.services.k8s.aws/v1alpha1
+kind: Trail
+metadata:
+  name: $TRAIL_NAME
+spec:
+  name: $TRAIL_NAME
+  cloudWatchLogsLogGroupARN: $CLOUDWATCH_LOG_GROUP_ARN
+  cloudWatchLogsRoleARN: $CLOUDWATCH_LOG_ROLE_ARN
+  includeGlobalServiceEvents: true
+  isMultiRegionTrail: true
+  isOrganizationTrail: false
+  s3BucketName: $S3_BUCKET_NAME
+  snsTopicName: $SNS_TOPIC_NAME
+  tags:
+  - key: $TRAIL_TAG_KEY
+    value: $TRAIL_TAG_VALUE

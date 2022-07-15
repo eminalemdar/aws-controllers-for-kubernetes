@@ -1,0 +1,14 @@
+---
+apiVersion: sns.services.k8s.aws/v1alpha1
+kind: Topic
+metadata:
+  name: $TOPIC_NAME
+spec:
+  name: $TOPIC_NAME
+  displayName: $DISPLAY_NAME
+  deliveryPolicy: $DELIVERY_POLICY
+  kmsMasterKeyID: $KMS_KEY_ID
+  policy: $POLICY
+  tags:
+    - key: $TOPIC_TAG_KEY
+      value: $TOPIC_TAG_VALUE

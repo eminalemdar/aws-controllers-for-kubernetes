@@ -1,0 +1,17 @@
+---
+apiVersion: sns.services.k8s.aws/v1alpha1
+kind: PlatformApplication
+metadata:
+  name: $PLATFORM_APPLICATION_NAME
+spec:
+  eventDeliveryFailure: $EVENT_DELIVERY_FAILURE
+  eventEndpointCreated: $EVENT_ENDPOINT_CREATED
+  eventEndpointDeleted: $EVENT_ENDPOINT_DELETED
+  eventEndpointUpdated: $EVENT_ENDPOINT_UPDATED
+  failureFeedbackRoleARN: $FAILURE_FEEDBACK_ROLE_ARN
+  name: $PLATFORM_APPLICATION_NAME
+  platform: $PLATFORM
+  platformCredential: $CREDENTIAL
+  platformPrincipal: $PRINCIPAL
+  successFeedbackRoleARN: $SUCCESS_FEEDBACK_ROLE_ARN
+  successFeedbackSampleRate: $SAMPLE_RATE
