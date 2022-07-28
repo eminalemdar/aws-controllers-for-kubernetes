@@ -20,7 +20,7 @@ This repository consists of examples for the AWS Controllers for Kubernetes [(AC
 
   - [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
 
-If you don't have a Kubernetes cluster, you can create an EKS cluster with Terraform using the [example codes](./terraform-files/) within this repository.
+If you don't have a Kubernetes cluster, you can create an EKS cluster with Terraform using the [example codes](./scripts/terraform/) within this repository.
 
 ## Terraform Codes
 
@@ -61,7 +61,7 @@ aws eks --region <region> update-kubeconfig --name <cluster_name>
 
 When you want to install a Service Controller and configure IAM Permissions you can run `./ack_controller_install.sh <service_name>` and change the *service_name* accordingly.
 
-The [script](./ack_controller_install.sh) has two functions called install and permissions.
+The [script](./scripts/terraform/ack_controller_install.sh) has two functions called install and permissions.
 
 - Install function downloads the required Helm Chart from the official AWS Registry installs it to the Kubernetes cluster.
 
@@ -71,7 +71,7 @@ The [script](./ack_controller_install.sh) has two functions called install and p
 
 When you want to delete all the resources created in this repository, you can run `./cleanup.sh <service_name>` script in the root directory of this repository and change the *service_name* accordingly.
 
-The [script](./cleanup.sh) has one function and does the following:
+The [script](./scripts/terraform/cleanup.sh) has one function and does the following:
 
 - Uninstalls the Helm Chart for Service Controller
 
