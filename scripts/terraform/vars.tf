@@ -8,7 +8,7 @@ variable "cluster_name" {
 }
 
 variable "cluster_version" {
-  default = "1.22"
+  default = "1.26"
   description = "Kubernetes version of the EKS Cluster"
 }
 

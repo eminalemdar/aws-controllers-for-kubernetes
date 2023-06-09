@@ -1,5 +1,5 @@
 module "eks_cluster" {
-  source = "github.com/aws-ia/terraform-aws-eks-blueprints?ref=v4.0.9"
+  source = "github.com/aws-ia/terraform-aws-eks-blueprints?ref=v4.32.1"
 
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
@@ -59,7 +59,7 @@ module "eks_cluster" {
 }
 
 data "aws_eks_addon_version" "latest" {
-  for_each = toset(["vpc-cni", "coredns"])
+  for_each = toset(["vpc-cni"])
 
   addon_name         = each.value
   kubernetes_version = module.eks_cluster.eks_cluster_version
@@ -76,7 +76,7 @@ data "aws_eks_addon_version" "default" {
 
 
 module "eks_kubernetes_addons" {
-  source = "github.com/aws-ia/terraform-aws-eks-blueprints//modules/kubernetes-addons?ref=v4.0.9"
+  source = "github.com/aws-ia/terraform-aws-eks-blueprints//modules/kubernetes-addons?ref=v4.32.1"
 
   eks_cluster_id               = module.eks_cluster.eks_cluster_id
   eks_cluster_endpoint         = module.eks_cluster.eks_cluster_endpoint
@@ -92,19 +92,11 @@ module "eks_kubernetes_addons" {
     resolve_conflicts = "OVERWRITE"
   }
 
-  enable_amazon_eks_coredns = true
-  amazon_eks_coredns_config = {
-    addon_version     = data.aws_eks_addon_version.latest["coredns"].version
-    resolve_conflicts = "OVERWRITE"
-  }
-
   enable_amazon_eks_kube_proxy = true
   amazon_eks_kube_proxy_config = {
     addon_version     = data.aws_eks_addon_version.default["kube-proxy"].version
     resolve_conflicts = "OVERWRITE"
   }
-
-  enable_amazon_eks_aws_ebs_csi_driver  = true
 
   tags = {
       Name = var.cluster_name
